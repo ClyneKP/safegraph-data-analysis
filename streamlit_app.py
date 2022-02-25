@@ -284,12 +284,8 @@ if submitted and uploaded_file is None:
         st.error('Please upload your shapefile')
 
 
-
-    map_df = dataframe.to_crs(epsg=4326)
-    radius, center = shp.minimum_bounding_circle(map_df)
-
-    m = folium.Map(location=[center[0], center[1]], zoom_start=11)
-
-    Draw(export=False).add_to(m)
-
-    output = st_folium(m, width=500, height=500)
+expander2 = st.expander("Draw a Study Area")
+    with expander2:
+        m = folium.Map(location=[40.6650, -73.7821], zoom_start=11)
+        Draw(export=False).add_to(m)
+        output = st_folium(m, width=500, height=500)
