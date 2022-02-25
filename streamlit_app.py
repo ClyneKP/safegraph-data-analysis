@@ -9,7 +9,7 @@ with st.sidebar:
     st.header("Set Focus Here on Page Reload")
     st.write("Please click button at bottom of page.")
     for x in range(30):
-        time.sleep(2)
+        time.sleep(1)
         text_field = st.write("Field "+str(x))
         st.session_state.counter += 1
 
