@@ -5,7 +5,7 @@ import geemap.eefolium as geemap
 import ipywidgets as widgets
 from ipyleaflet import WidgetControl
 from geemap import geojson_to_ee
-
+from mycomponent import mycomponent
 import ee
 
 # os.environ["EARTHENGINE_TOKEN"] == st.secrets["EARTHENGINE_TOKEN"]
@@ -34,7 +34,5 @@ m.addLayerControl()
 # call to render Folium map in Streamlit
 folium_static(m)
 
-def get_features():
-    st.write(m.draw_features)
-
-st.button("Get Features",on_click=get_features())
+value = mycomponent(my_input_value="hello there")
+st.write("Received", value)
