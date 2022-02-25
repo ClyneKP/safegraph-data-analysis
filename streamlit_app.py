@@ -93,7 +93,7 @@ def query_radius(i,lat,lng,distance):
         time.sleep(2)
         cursor = res['data']['search']['places']['results']['pageInfo']['endCursor']
         nextPage = res['data']['search']['places']['results']['pageInfo']['hasNextPage']
-        st.sidebar.write("&nbsp;&nbsp;&nbsp;&nbsp;Found places:", len(dfs))
+        st.sidebar.write("   Found places:", len(dfs))
         st.session_state.counter += 1
 
     else:
