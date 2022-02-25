@@ -1,5 +1,8 @@
 import streamlit as st
 import geopandas as gpd
+import numpy as np
+import shapestats_kc as shp
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="streamlit-folium documentation")
 
@@ -19,7 +22,7 @@ with st.echo():
         m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
         folium.GeoJson(data=data['geometry']).add_to(m)
     else:
-        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=4326)
         m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
         folium.GeoJson(data=dataframe['geometry']).add_to(m)
 
