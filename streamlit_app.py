@@ -263,12 +263,6 @@ with form:
 
 download = st.container()
 
-if submitted and uploaded_file is None:
-
-    if studyname == "":
-        st.error('Please upload your shapefile and name your project')
-    else:
-        st.error('Please upload your shapefile')
 
 m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
 Draw(export=False).add_to(m)
@@ -285,7 +279,15 @@ if uploaded_file is not None:
 
 if submitted:
     with st.spinner('Processing...'):
-        printer(studyname, dataframe)        
+        printer(studyname, dataframe)
+elif:
+    uploaded_file is None:
+        if studyname == "":
+            st.error('Please upload your shapefile and name your project')
+        else:
+            st.error('Please upload your shapefile')
+
+
         
 
 # call to render Folium map in Streamlit
