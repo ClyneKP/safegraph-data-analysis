@@ -220,8 +220,9 @@ with form:
     st.subheader('Draw or Upload Your Study Area(s)')
     uploaded_file = st.file_uploader("Upload:")
     if uploaded_file is not None:
-        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=4326)
-        geometry = dataframe['geometry']
+        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+        mapdata = dataframe.to_crs(epsg=4326)
+        geometry = mapdata['geometry']
         bbox = dataframe.total_bounds
         m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
         folium.GeoJson(data=geometry).add_to(m)
@@ -271,11 +272,6 @@ with form:
 
 
 download = st.container()
-
-if uploaded_file is not None:
-    dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-    data_map = dataframe.to_crs(epsg=4326)
-    folium.GeoJson(data=data_map['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
 
 if submitted and uploaded_file is not None:
     if studyname == "":
