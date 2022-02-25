@@ -209,15 +209,16 @@ st.title("HR&A SafeGraph Analysis Tool")
 
 
 form = st.form(key="inputs")
-
+m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+Draw(export=False).add_to(m)
 
 with form:
     studyname = st.text_input("Project Name",value="")
     st.markdown("***")
     col1, col2 = st.columns([3, 1])
     with col1:
-        m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-        Draw(export=False).add_to(m)
+        folium_static(m)
+
     
     with col2:
         uploaded_file = st.file_uploader("Upload Study Area Shapefile")
