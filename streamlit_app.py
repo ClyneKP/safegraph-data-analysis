@@ -211,7 +211,6 @@ form = st.form(key="inputs")
 
 with form:
     studyname = st.text_input("Project Name",value="")
-    placeholder = st.empty()
     st.markdown("***")
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
@@ -259,7 +258,7 @@ with form:
                         mime='text/csv',)
 
     
-
+placeholder = st.empty()
 download = st.container()
 
 if submitted and uploaded_file is not None:
