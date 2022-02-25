@@ -239,7 +239,7 @@ with form:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
         geodf = dataframe.to_crs(epsg=4326)
         rad, coords = shp.minimum_bounding_circle(dataframe)
-        map(geodf,rad[0],rad[1] midpoint[1], 11)
+        map(geodf,coords[0], coords[1], 11)
 
     
     st.markdown("***")
