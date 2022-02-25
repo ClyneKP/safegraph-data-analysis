@@ -9,7 +9,7 @@ from streamlit_folium import st_folium
 
 @st.experimental_singleton
 def get_data() -> List[Dict]:
-    api_key = st.secrets["api_key"]
+    api_key = "mpv7H89ZmdshipL7aq1uqXbZQ9BTOtRMqWxfghSU"
     url = f"https://developer.nps.gov/api/v1/parks?api_key={api_key}&limit=500"
     resp = requests.get(url)
     data = resp.json()["data"]
