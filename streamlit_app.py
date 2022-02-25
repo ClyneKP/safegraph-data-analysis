@@ -33,11 +33,12 @@ hide_streamlit_style = """
             #MainMenu {visibility: hidden;}
             button[data-testid] {visibility: hidden;}
             header {visibility: hidden;}
-            footer {visibility: hidden;}
+            
             div > div > iframe{display: none;}
             div[data-testid="stVerticalBlock"]{gap: 0em !important;}
             </style>
             """
+            #footer {visibility: hidden;}
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 
