@@ -3,24 +3,16 @@ import geopandas as gpd
 import numpy as np
 import shapestats_kc as shp
 import matplotlib.pyplot as plt
-import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
+from streamlit_folium import folium_static
 
 
 st.set_page_config(page_title="streamlit-folium documentation")
 
-"# streamlit-folium"
 
-data = gpd.read_file("Lower Manhattan2.geojson").to_crs(epsg=26914)
-
-
-
-import streamlit as st
-from streamlit_folium import folium_static
-import folium
-
-uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+with form:
+    uploaded_file = st.file_uploader("Upload Study Area Shapefile")
 
 
 m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
