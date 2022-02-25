@@ -280,8 +280,8 @@ if uploaded_file is not None:
 if submitted:
     with st.spinner('Processing...'):
         printer(studyname, dataframe)
-elif:
-    uploaded_file is None:
+else:
+    if uploaded_file is None:
         if studyname == "":
             st.error('Please upload your shapefile and name your project')
         else:
