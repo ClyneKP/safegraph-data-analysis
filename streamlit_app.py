@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import geopandas as gpd
 from shapely.geometry import Point
+import contextily as cx
 import pandas as pd
 import time
 import shapestats_kc as shp
@@ -203,9 +204,17 @@ form = st.form(key="inputs")
 
 with form:
     studyname = st.text_input("Project Name",value="")
+    st.markdown("***")
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+        df_wm = df.to_crs(epsg=3857)
+        ax = df_wm.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
+        cx.add_basemap(ax, source=cx.providers.Stamen.TonerLite)
+        ax.set_axis_off()
+        st.pyplot()
+    
+    st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
      options=[dt.strftime("%B %Y") for dt in dates],
@@ -213,8 +222,9 @@ with form:
 
     start_month = dates.index(datetime.datetime.strptime(options[0],"%B %Y"))
     end_month = dates.index(datetime.datetime.strptime(options[1],"%B %Y"))
-
-    expander = st.expander("See all records")
+    st.markdown("***")
+    st.markdown("***")
+    expander = st.expander("Advanced Settings")
     with expander:
         st.write(f"Open original NAICS def google sheet")
 
