@@ -2,6 +2,7 @@ import streamlit as st
 import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
+import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 import geopandas as gpd
 from shapely.geometry import Point
@@ -215,6 +216,16 @@ with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+        data_map = dataframe.to_crs(epsg=4326)
+        for _, r in data_map.iterrows():
+        # Without simplifying the representation of each borough,
+        # the map might not be displayed
+        sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
+        geo_j = sim_geo.to_json()
+        geo_j = folium.GeoJson(data=geo_j,
+                               style_function=lambda x: {'fillColor': 'orange'})
+        geo_j.add_to(m)
+
     placeholder = st.empty()
     st.markdown("***")
     options = st.select_slider(
@@ -286,6 +297,6 @@ if submitted and uploaded_file is None:
 
 expander2 = st.expander("Draw a Study Area")
 with expander2:
-    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11)
+    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
     Draw(export=False).add_to(m)
     output = st_folium(m, width=500, height=500)
