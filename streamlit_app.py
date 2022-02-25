@@ -216,14 +216,7 @@ with form:
     st.markdown("***")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        map_df = dataframe.to_crs(epsg=4326)
-        radius, center = shp.minimum_bounding_circle(map_df)
 
-        m = folium.Map(location=[center[0], center[1]], zoom_start=11)
-
-        Draw(export=False).add_to(m)
-
-        output = st_folium(m, width=500, height=500)
 
 
     
@@ -286,3 +279,13 @@ if submitted and uploaded_file is None:
     else:
         st.error('Please upload your shapefile')
 
+
+if uploaded_file is not None:
+    map_df = dataframe.to_crs(epsg=4326)
+    radius, center = shp.minimum_bounding_circle(map_df)
+
+    m = folium.Map(location=[center[0], center[1]], zoom_start=11)
+
+    Draw(export=False).add_to(m)
+
+    output = st_folium(m, width=500, height=500)
