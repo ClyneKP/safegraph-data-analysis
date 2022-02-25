@@ -52,7 +52,7 @@ headers = {'apikey': st.secrets["SG_KEY"]}
 endpoint = HTTPEndpoint(url, headers)
 
 def map(data, lat, lon, zoom):
-    st.write(pdk.Deck(
+    st.write(st.pydeck_chart(pdk.Deck(
         map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state={
             "latitude": lat,
@@ -75,7 +75,7 @@ def map(data, lat, lon, zoom):
             pickable=True,
         ),
         ]
-    ))
+    )))
 
 
 def scroll():
