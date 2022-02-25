@@ -27,7 +27,7 @@ with st.echo():
         bbox = dataframe.total_bounds
         st.write(bbox)
         m = folium.Map(location=[40.70, -73.94], tiles='CartoDB positron')
-        m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]])
+        m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
         folium.GeoJson(data=geometry).add_to(m)
 
 
