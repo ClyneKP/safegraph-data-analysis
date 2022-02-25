@@ -213,13 +213,16 @@ m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron'
 Draw(export=False).add_to(m)
 
 with form:
-    studyname = st.text_input("Project Name",value="")
+    st.subheader('Give Your Project a Name')
+    studyname = st.text_input("Project Name:",value="")
     st.markdown("***")
+    st.subheader('Draw or Upload Your Study Area(s)')
     folium_static(m)
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     st.markdown("***")
+    st.subheader('Select a Timeframe')
     options = st.select_slider(
-     'Select a timeframe',
+     'Timeframe:',
      options=[dt.strftime("%B %Y") for dt in dates],
      value=([dt.strftime("%B %Y") for dt in dates][len(dates)-25], [dt.strftime("%B %Y") for dt in dates][len(dates)-1]))
 
@@ -229,7 +232,7 @@ with form:
     st.markdown("***")
     expander = st.expander("Advanced Settings")
     with expander:
-        st.write(f"Open original NAICS def google sheet")
+        st.write(f"[Will add options to select/edit NAICS categories here]")
 
     st.markdown("***")
 
@@ -293,7 +296,3 @@ if uploaded_file is not None:
     bbox = dataframe.total_bounds
     m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
     folium.GeoJson(data=geometry).add_to(m)
-
-
-# call to render Folium map in Streamlit
-folium_static(m)
