@@ -11,7 +11,8 @@ import datetime
 from dateutil.rrule import rrule, MONTHLY
 from dateutil.relativedelta import relativedelta
 import numpy as np
-import pydeck as pdk
+from streamlit_folium import folium_static
+import folium
 
 
 #Create a list of the months of data that SafeGraph has.
@@ -51,19 +52,6 @@ headers = {'apikey': st.secrets["SG_KEY"]}
 
 endpoint = HTTPEndpoint(url, headers)
 
-jfk = [40.6650, -73.7821]
-
-def map(data, lat, lon, zoom):
-    layers = pdk.Layer("GeoJsonLayer", data=data, get_fill_color=[0, 0, 0],)
-
-    st.write(pdk.Deck(layers, map_style="mapbox://styles/mapbox/light-v9",
-        initial_view_state={
-            "latitude": jfk[0],
-            "longitude": jfk[1],
-            "zoom": 11,
-            "pitch": 50,
-        }
-    ))
 
 
 def scroll():
@@ -225,9 +213,17 @@ with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        geodf = dataframe.to_crs(epsg=4326)
-        rad, coords = shp.minimum_bounding_circle(dataframe)
-        map(geodf,coords[0], coords[1], 11)
+
+        m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+
+        # add marker for Liberty Bell
+        tooltip = "Liberty Bell"
+        folium.Marker(
+            [39.949610, -75.150282], popup="Liberty Bell", tooltip=tooltip
+        ).add_to(m)
+
+        # call to render Folium map in Streamlit
+        folium_static(m)
 
     
     st.markdown("***")
@@ -288,9 +284,3 @@ if submitted and uploaded_file is None:
         st.error('Please upload your shapefile and name your project')
     else:
         st.error('Please upload your shapefile')
-
-if uploaded_file is not None:
-        maps = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        rad, coords = shp.minimum_bounding_circle(maps)
-        geodf = maps.to_crs(epsg=4326)
-        map(geodf,coords[0], coords[1], 11)

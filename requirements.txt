@@ -8,3 +8,4 @@ libpysal
 shapely
 sgqlc
 contextily
+streamlit-folium
