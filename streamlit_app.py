@@ -7,7 +7,7 @@ if "counter" not in st.session_state:
 with st.sidebar:
     st.header("Set Focus Here on Page Reload")
     st.write("Please click button at bottom of page.")
-    for x in range(20):
+    for x in range(30):
         text_field = st.write("Field "+str(x))
 
 if st.button("Load New Page"):
@@ -17,7 +17,7 @@ components.html(
     f"""
         <p>{st.session_state.counter}</p>
         <script>
-            window.parent.document.querySelector('section.main').scrollTo(0, 0);
+            window.parent.document.querySelector('section[st-sidebar]').scrollTo(0, 0);
         </script>
     """,
     height=0
