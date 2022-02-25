@@ -16,7 +16,7 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 url = 'https://api.safegraph.com/v2/graphql'
-headers = {'apikey': 'gwz3g4HWxq0zj2Rpfqk7nlYuQUI5XXMm'}
+headers = {'apikey': st.secrets["SG_KEY"]}
 
 endpoint = HTTPEndpoint(url, headers)
 
