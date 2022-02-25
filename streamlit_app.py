@@ -214,7 +214,13 @@ form = st.form(key="inputs")
 with form:
     studyname = st.text_input("Project Name",value="")
     st.markdown("***")
-    uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+        Draw(export=False).add_to(m)
+    
+    with col2:
+        uploaded_file = st.file_uploader("Upload Study Area Shapefile")
 
     placeholder = st.empty()
     st.markdown("***")
@@ -259,11 +265,6 @@ with form:
 
     
 
-expander2 = st.expander("Draw a Study Area")
-with expander2:
-    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
-    Draw(export=False).add_to(m)
-    output = st_folium(m, width=500, height=500)
 
 download = st.container()
 
@@ -290,8 +291,7 @@ if submitted and uploaded_file is None:
 
 
 
-m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-Draw(export=False).add_to(m)
+
 
 if uploaded_file is not None:
     dataframe = gpd.read_file(uploaded_file).to_crs(epsg=4326)
