@@ -214,17 +214,6 @@ with form:
     studyname = st.text_input("Project Name",value="")
     st.markdown("***")
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
-    if uploaded_file is not None:
-        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        data_map = dataframe.to_crs(epsg=4326)
-        for _, r in data_map.iterrows():
-            # Without simplifying the representation of each borough,
-            # the map might not be displayed
-            sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
-            geo_j = sim_geo.to_json()
-            geo_j = folium.GeoJson(data=geo_j,
-                                   style_function=lambda x: {'fillColor': 'orange'})
-            geo_j.add_to(m)
 
     placeholder = st.empty()
     st.markdown("***")
@@ -269,14 +258,25 @@ with form:
 
     
 
-def placer():
-    with placeholder:
-         for seconds in range(60):
-             st.write(f"⏳ {seconds} seconds have passed")
-             time.sleep(1)
-         st.write("✔️ 1 minute over!")
+expander2 = st.expander("Draw a Study Area")
+with expander2:
+    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
+    Draw(export=False).add_to(m)
+    output = st_folium(m, width=500, height=500)
 
 download = st.container()
+
+if uploaded_file is not None:
+    dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+    data_map = dataframe.to_crs(epsg=4326)
+    for _, r in data_map.iterrows():
+        # Without simplifying the representation of each borough,
+        # the map might not be displayed
+        sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
+        geo_j = sim_geo.to_json()
+        geo_j = folium.GeoJson(data=geo_j,
+                               style_function=lambda x: {'fillColor': 'orange'})
+        geo_j.add_to(m)
 
 if submitted and uploaded_file is not None:
     if studyname == "":
@@ -284,7 +284,7 @@ if submitted and uploaded_file is not None:
     else:
         with st.spinner('Processing...'):
             printer(studyname, dataframe)
-        placer()
+
 
 
 if submitted and uploaded_file is None:
@@ -295,8 +295,3 @@ if submitted and uploaded_file is None:
         st.error('Please upload your shapefile')
 
 
-expander2 = st.expander("Draw a Study Area")
-with expander2:
-    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
-    Draw(export=False).add_to(m)
-    output = st_folium(m, width=500, height=500)
