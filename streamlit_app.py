@@ -1,8 +1,10 @@
 import streamlit as st
+import folium
+from folium.plugins import Draw
+from streamlit_folium import st_folium
 import streamlit.components.v1 as components
 import geopandas as gpd
 from shapely.geometry import Point
-import contextily as cx
 import pandas as pd
 import time
 import shapestats_kc as shp
@@ -11,9 +13,7 @@ import datetime
 from dateutil.rrule import rrule, MONTHLY
 from dateutil.relativedelta import relativedelta
 import numpy as np
-import folium
-from folium.plugins import Draw
-from streamlit_folium import st_folium
+
 
 
 #Create a list of the months of data that SafeGraph has.
