@@ -10,17 +10,15 @@ with st.sidebar:
     for x in range(30):
         text_field = st.write("Field "+str(x))
 
-if st.button("Load New Page"):
+if st.button("Move"):
     st.session_state.counter += 1
 
 components.html(
-    f"""
-        <p>{st.session_state.counter}</p>
+    """
         <script>
-            window.parent.document.querySelector('.css-1outpf7').scrollTo(0, 0);
+            window.parent.document.querySelector('.css-1outpf7').scrollTo({top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'});
         </script>
-    """,
-    height=0
+    """
 )
 
 st.write(f"Page load: {st.session_state.counter}")
