@@ -17,6 +17,7 @@ with st.echo():
     import ee
 
     m = geemap.Map(center=[40.70, -73.94], zoom=4)
+    m.draw_features
     dem = ee.Image('USGS/SRTMGL1_003')
 
     vis_params = {
@@ -25,7 +26,7 @@ with st.echo():
     'palette': ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5']}
 
     m.addLayer(dem, vis_params, 'SRTM DEM', True, 1)
-    m.addLayerControl(draw_control)
+    m.addLayerControl()
 
     # call to render Folium map in Streamlit
     folium_static(m)
