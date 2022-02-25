@@ -233,29 +233,23 @@ with expander:
 
 st.markdown("***")
 
-submitted = st.form_submit_button(label="Submit")
+submitted = st.button(label="Submit",on_click=checks())
 
-if uploaded_file is not None:
-    dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-    data_map = dataframe.to_crs(epsg=4326)
-    folium.GeoJson(data=data_map['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
-
-if submitted and uploaded_file is not None:
-    if studyname == "":
-        st.error('Please name your project')
-    else:
-        with st.spinner('Processing...'):
-            printer(studyname, dataframe)
-
-
-
-if submitted and uploaded_file is None:
-
-    if studyname == "":
-        st.error('Please upload your shapefile and name your project')
+def checks():
+    if uploaded_file is not None:
+        if studyname == "":
+            st.error('Please name your project')
+        else:
+            dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+            datamap = dataframe.to_crs(epsg=4326)
+            geometry = datamap['geometry']
+            bbox = datamap.total_bounds
+            m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
+            folium.GeoJson(data=geometry).add_to(m)
+            with st.spinner('Processing...'):
+                printer(studyname, dataframe)
     else:
         st.error('Please upload your shapefile')
-
 
 def convert_df(df):
  # IMPORTANT: Cache the conversion to prevent computation on every rerun
