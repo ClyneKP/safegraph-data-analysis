@@ -2,6 +2,9 @@ import streamlit as st
 from folium.plugins import Draw
 from streamlit_folium import folium_static
 import geemap.eefolium as geemap
+import ipywidgets as widgets
+from ipyleaflet import WidgetControl
+from geemap import geojson_to_ee
 
 import ee
 
