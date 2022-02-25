@@ -1,6 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import geopandas as gpd
+from shapely.geometry import Point
 import pandas as pd
 import time
 import shapestats_kc as shp
@@ -31,6 +32,17 @@ headers = {'apikey': st.secrets["SG_KEY"]}
 
 endpoint = HTTPEndpoint(url, headers)
 
+def scroll():
+    st.session_state.counter += 1
+    components.html(
+        f"""
+        <p>{st.session_state.counter}</p>
+        <script>
+        window.parent.document.querySelector('.css-1outpf7').scrollTo({{top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'}});
+        </script>
+        """,
+        height=0
+        )
 
 def query_radius(i,lat,lng,distance):
     records_per_call = 20
@@ -82,21 +94,14 @@ def query_radius(i,lat,lng,distance):
         cursor = res['data']['search']['places']['results']['pageInfo']['endCursor']
         nextPage = res['data']['search']['places']['results']['pageInfo']['hasNextPage']
         st.sidebar.write("&nbsp;&nbsp;&nbsp;&nbsp;Found places:", len(dfs))
+        st.session_state.counter += 1
+
     else:
         st.sidebar.write(f"""Completed querying all places in Polygon #{i}""")
+
         for t in range(1,30):
             time.sleep(1)
-            st.session_state.counter += 1
-            st.sidebar.write(f"""Next""")
-            components.html(
-            f"""
-                <p>{st.session_state.counter}</p>
-                <script>
-                    window.parent.document.querySelector('.css-1outpf7').scrollTo({{top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'}});
-                </script>
-            """,
-            height=0
-            )
+            scroll()
     return(dfs)
 
 
@@ -128,10 +133,8 @@ with form:
         time.sleep(5)
         b = gdf.iloc[0].geometry
         radius, center = shp.minimum_bounding_circle(b)
-        lat = 37.78247
-        lng = -122.407752
-        distance = 100
-        data = query_radius(1,lat,lng,distance)
+        p = gpd.GeoSeries([Point(center[0], center[1])], crs="EPSG:26914").to_crs(epsg=4326)
+        data = query_radius(1,p[0].y,p[0].x,round(radius))
         csv = convert_df(data)
 
         with download:
