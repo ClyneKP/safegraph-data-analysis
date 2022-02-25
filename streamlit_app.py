@@ -11,7 +11,7 @@ with st.sidebar:
     for x in range(30):
         time.sleep(3)
         text_field = st.write("Field "+str(x))
-         st.session_state.counter += 1
+        st.session_state.counter += 1
 
 components.html(
     f"""
