@@ -214,7 +214,7 @@ with form:
         ax = df_wm.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
         cx.add_basemap(ax, source=cx.providers.Stamen.TonerLite)
         ax.set_axis_off()
-        st.pyplot()
+        st.pyplot(ax)
     
     st.markdown("***")
     options = st.select_slider(
