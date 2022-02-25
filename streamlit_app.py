@@ -17,7 +17,7 @@ with st.echo():
 
     # center on Liberty Bell, add marker
     if page == "Single map":
-        m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+        m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
         tooltip = "Liberty Bell"
         folium.Marker(
             [39.949610, -75.150282], popup="Liberty Bell", tooltip=tooltip
