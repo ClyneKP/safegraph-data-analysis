@@ -2,6 +2,7 @@ import streamlit as st
 import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
+from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 import geopandas as gpd
@@ -287,7 +288,7 @@ if submitted and uploaded_file is None:
     else:
         st.error('Please upload your shapefile')
 
-        
+
 
 m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
 Draw(export=False).add_to(m)
