@@ -216,7 +216,7 @@ Draw(export=False).add_to(m)
 studyname = st.text_input("Project Name",value="")
 st.markdown("***")
 uploaded_file = st.file_uploader("Upload Study Area Shapefile")
-download = st.container()
+folium_static(m)
 st.markdown("***")
 options = st.select_slider(
  'Select a timeframe',
@@ -252,7 +252,7 @@ def checks():
 
 submitted = st.button(label="Submit",on_click=checks())
 
-
+download = st.container()
 def convert_df(df):
  # IMPORTANT: Cache the conversion to prevent computation on every rerun
  return df.to_csv().encode('utf-8')
