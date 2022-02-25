@@ -17,11 +17,6 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
-adjust_console = """
-            <script>
-            $('.block-container').scrollTop($('.block-container')[0].scrollHeight);
-            </script>
-            """
 
 url = 'https://api.safegraph.com/v2/graphql'
 headers = {'apikey': st.secrets["SG_KEY"]}
@@ -82,8 +77,6 @@ def query_radius(i,lat,lng,distance):
     else:
         st.sidebar.write(f"""Completed querying all places in Polygon #{i}""")
         for t in range(1,20):
-            time.sleep(1)
-            st.markdown(adjust_console, unsafe_allow_html=True) 
             st.sidebar.write(f"""Next""")
     return(dfs)
 
