@@ -256,6 +256,8 @@ with form:
     with expander:
         st.write(f"Open original NAICS def google sheet")
 
+    st.markdown("***")
+
     submitted = st.form_submit_button(label="Submit")
 
     def convert_df(df):
@@ -298,3 +300,9 @@ if submitted and uploaded_file is None:
         st.error('Please upload your shapefile and name your project')
     else:
         st.error('Please upload your shapefile')
+
+if uploaded_file is not None:
+        maps = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+        rad, coords = shp.minimum_bounding_circle(maps)
+        geodf = maps.to_crs(epsg=4326)
+        map(geodf,coords[0], coords[1], 11)
