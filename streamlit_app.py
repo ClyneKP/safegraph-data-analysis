@@ -115,10 +115,6 @@ def query_radius(i,lat,lng,distance):
     else:
         st.sidebar.write(f"""Completed querying all places in Polygon #{i}""")
 
-        for t in range(1,30):
-            st.sidebar.write('Next')
-            time.sleep(1)
-            scroll()
     return(dfs)
 
 def month_analysis(data,start_date,end_date):
@@ -230,7 +226,7 @@ with form:
         radius, center = shp.minimum_bounding_circle(b)
         p = gpd.GeoSeries([Point(center[0], center[1])], crs="EPSG:26914").to_crs(epsg=4326)
         data = query_radius(1,p[0].y,p[0].x,round(radius))
-        place_files = get_monthly_data(list(data['placekeys']),start_month,end_month)
+        place_files = month_analysis(data,start_month,end_month)
         csv = convert_df(data)
 
         with download:
