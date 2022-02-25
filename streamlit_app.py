@@ -1,8 +1,8 @@
 import streamlit as st
-from streamlit_folium import folium_static
 import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
+from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 import geopandas as gpd
