@@ -218,7 +218,7 @@ with form:
     st.markdown("***")
     st.subheader('Draw or Upload Your Study Area(s)')
     folium_static(m)
-    uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+    uploaded_file = st.file_uploader("Upload:")
     st.markdown("***")
     st.subheader('Select a Timeframe')
     options = st.select_slider(
