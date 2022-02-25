@@ -285,7 +285,7 @@ if submitted and uploaded_file is None:
 
 
 expander2 = st.expander("Draw a Study Area")
-    with expander2:
-        m = folium.Map(location=[40.6650, -73.7821], zoom_start=11)
-        Draw(export=False).add_to(m)
-        output = st_folium(m, width=500, height=500)
+with expander2:
+    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11)
+    Draw(export=False).add_to(m)
+    output = st_folium(m, width=500, height=500)
