@@ -217,7 +217,7 @@ with form:
     st.markdown("***")
     col1, col2 = st.columns([3, 1])
     with col1:
-        folium_static(m,width="50%",height="50%")
+        folium_static(m,width=50,height=50)
 
     
     with col2:
