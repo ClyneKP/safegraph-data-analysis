@@ -213,12 +213,6 @@ with form:
     st.markdown("***")
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     st.markdown("***")
-
-    m = folium.Map(location=[39.949610, -75.150282], zoom_start=5)
-
-    Draw(export=False).add_to(m)
-
-    output = st_folium(m, width=500, height=500)
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
 
@@ -282,3 +276,9 @@ if submitted and uploaded_file is None:
         st.error('Please upload your shapefile and name your project')
     else:
         st.error('Please upload your shapefile')
+
+m = folium.Map(location=[39.949610, -75.150282], zoom_start=5)
+
+Draw(export=False).add_to(m)
+
+output = st_folium(m, width=500, height=500)
