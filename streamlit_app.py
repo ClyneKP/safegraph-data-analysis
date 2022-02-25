@@ -4,6 +4,8 @@ st.set_page_config(page_title="streamlit-folium documentation")
 
 "# streamlit-folium"
 
+data = gpd.read_file("Lower Manhattan2.geojson").to_crs(epsg=26914)
+
 with st.echo():
 
     import streamlit as st
@@ -18,10 +20,7 @@ with st.echo():
     # center on Liberty Bell, add marker
     if page == "Single map":
         m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-        tooltip = "Liberty Bell"
-        folium.Marker(
-            [39.949610, -75.150282], popup="Liberty Bell", tooltip=tooltip
-        ).add_to(m)
+        folium.GeoJson(data=data['geometry']).add_to(m)
 
     elif page == "Dual map":
         m = folium.plugins.DualMap(location=[39.949610, -75.150282], zoom_start=16)
