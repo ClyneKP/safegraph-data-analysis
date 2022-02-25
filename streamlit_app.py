@@ -52,16 +52,16 @@ headers = {'apikey': st.secrets["SG_KEY"]}
 endpoint = HTTPEndpoint(url, headers)
 
 def map(data, lat, lon, zoom):
-    st.write(st.pydeck_chart(pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v9",
+    layers = pdk.Layer("GeoJsonLayer", data=data, get_fill_color=[0, 0, 0],)
+
+    st.write(pdk.Deck(layers, map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state={
             "latitude": lat,
             "longitude": lon,
             "zoom": zoom,
             "pitch": 50,
-        },
-        layers= pdk.Layer("GeoJsonLayer", data=data, get_fill_color=[0, 0, 0],)
-    )))
+        }
+    ))
 
 
 def scroll():
