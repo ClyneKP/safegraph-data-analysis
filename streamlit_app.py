@@ -256,6 +256,7 @@ with form:
                         data=csv,
                         file_name= studyname + '.csv',
                         mime='text/csv',)
+m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
 
 def add_data():
     for _, r in df.iterrows():
@@ -268,14 +269,14 @@ def add_data():
         folium.Popup(r['BoroName']).add_to(geo_j)
         geo_j.add_to(m)
     with empty:
-        output = st_folium(m, width=500, height=500)
+        st_folium(m, width=500, height=500)
     
 
 empty = st.empty()
 with empty:
     m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
     Draw(export=False).add_to(m)
-    output = st_folium(m, width=500, height=500)
+    st_folium(m, width=500, height=500)
 
 st.button("Add Data", on_click=None)
 
