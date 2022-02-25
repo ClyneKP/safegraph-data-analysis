@@ -21,12 +21,12 @@ with st.echo():
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
 
     if uploaded_file is None:
+        m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+        folium.GeoJson(data=data['geometry']).add_to(m)
+    else:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
         m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
         folium.GeoJson(data=dataframe['geometry']).add_to(m)
-    else:
-        m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-        folium.GeoJson(data=data['geometry']).add_to(m)
 
 
     # call to render Folium map in Streamlit
