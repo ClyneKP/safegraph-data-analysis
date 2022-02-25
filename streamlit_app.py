@@ -215,7 +215,7 @@ with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        
+    placeholder = st.empty()
     st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
@@ -257,14 +257,14 @@ with form:
                         mime='text/csv',)
 
     
-placeholder = st.empty()
+
 
 with placeholder:
      for seconds in range(60):
          st.write(f"⏳ {seconds} seconds have passed")
          time.sleep(1)
      st.write("✔️ 1 minute over!")
-     
+
 download = st.container()
 
 if submitted and uploaded_file is not None:
