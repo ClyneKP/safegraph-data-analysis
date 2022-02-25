@@ -210,6 +210,8 @@ st.title("HR&A SafeGraph Analysis Tool")
 
 form = st.form(key="inputs")
 
+m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+Draw(export=False).add_to(m)
 
 with form:
     studyname = st.text_input("Project Name",value="")
@@ -264,9 +266,6 @@ with form:
 download = st.container()
 
 
-m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-Draw(export=False).add_to(m)
-
 if uploaded_file is not None:
     dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
     datamap = dataframe.to_crs(epsg=4326)
@@ -286,9 +285,6 @@ if submitted:
     else:
         with st.spinner('Processing...'):
             printer(studyname, dataframe)
-
-
-        
 
 # call to render Folium map in Streamlit
 folium_static(m)
