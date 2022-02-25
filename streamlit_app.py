@@ -74,7 +74,9 @@ def query_radius(i,lat,lng,distance):
         nextPage = res['data']['search']['places']['results']['pageInfo']['hasNextPage']
         st.sidebar.write("&nbsp;&nbsp;&nbsp;&nbsp;Found places:", len(dfs))
     else:
-        st.sidebar.write(f"""Completed querying all places in polygon #{i}""")
+        st.sidebar.write(f"""Completed querying all places in Polygon #{i}""")
+        for t in range(1,50):
+            st.sidebar.write(f"""Next""")
     return(dfs)
 
 
