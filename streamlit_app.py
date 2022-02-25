@@ -258,12 +258,12 @@ with form:
 
     
 
-
-with placeholder:
-     for seconds in range(60):
-         st.write(f"⏳ {seconds} seconds have passed")
-         time.sleep(1)
-     st.write("✔️ 1 minute over!")
+def placer():
+    with placeholder:
+         for seconds in range(60):
+             st.write(f"⏳ {seconds} seconds have passed")
+             time.sleep(1)
+         st.write("✔️ 1 minute over!")
 
 download = st.container()
 
@@ -273,8 +273,7 @@ if submitted and uploaded_file is not None:
     else:
         with st.spinner('Processing...'):
             printer(studyname, dataframe)
-        with placeholder:
-            st.write("This is one element")
+        placer()
 
 
 if submitted and uploaded_file is None:
