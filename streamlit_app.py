@@ -1,4 +1,5 @@
 import streamlit as st
+import geopandas as gpd
 
 st.set_page_config(page_title="streamlit-folium documentation")
 
