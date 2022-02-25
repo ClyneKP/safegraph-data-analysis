@@ -40,8 +40,9 @@ hide_streamlit_style = """
             #MainMenu {visibility: hidden;}
             
             header {visibility: hidden;}
-            
-            
+            footer {visibility: hidden;}
+            button[data-testid] {visibility: hidden;}
+            div > div > iframe{display: none;}
             div[data-testid="stVerticalBlock"]{gap: 0em !important;}
             </style>
             """
@@ -257,22 +258,6 @@ with form:
                         file_name= studyname + '.csv',
                         mime='text/csv',)
 
-
-
-def add_data():
-    d = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-    folium.GeoJson(data=df['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
-    with empty:
-        st_folium(d, width=500, height=500)
-    
-
-empty = st.empty()
-with empty:
-    m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-    Draw(export=False).add_to(m)
-    st_folium(m, width=500, height=500)
-
-st.button("Add Data", on_click=None)
 
 download = st.container()
 
