@@ -7,6 +7,9 @@ import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
 import ee
+service_account = "admin-815@earth-engine-342417.iam.gserviceaccount.com"
+credentials = ee.ServiceAccountCredentials(service_account, 'earth-engine-342417-f19485aba489.json')
+ee.Initialize(credentials)
 import geemap
 
 st.set_page_config(page_title="streamlit-folium documentation")
