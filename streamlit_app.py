@@ -1,6 +1,8 @@
 import streamlit as st
+from folium.plugins import Draw
 from streamlit_folium import folium_static
 import geemap.eefolium as geemap
+
 import ee
 
 # os.environ["EARTHENGINE_TOKEN"] == st.secrets["EARTHENGINE_TOKEN"]
@@ -17,7 +19,7 @@ with st.echo():
     import ee
 
     m = geemap.Map(center=[40.70, -73.94], zoom=4)
-    m.draw_features
+    Draw(export=False).add_to(m)
     dem = ee.Image('USGS/SRTMGL1_003')
 
     vis_params = {
