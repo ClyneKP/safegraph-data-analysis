@@ -17,7 +17,7 @@ components.html(
     f"""
         <p>{st.session_state.counter}</p>
         <script>
-            window.parent.document.querySelector('.css-1outpf7').scrollTo({top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'});
+            window.parent.document.querySelector('.css-1outpf7').scrollTo({{top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'}});
         </script>
     """,
     height=0
