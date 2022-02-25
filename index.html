@@ -6,15 +6,28 @@
     overflow: hidden;
     position:  relative;
 }
-iframe {
+#mainframe {
     border: none;
     width: 100%;
     height: calc(100% + 50px);
     position: absolute;
 }
+
+div > div > iframe{
+	display: none;
+}
+
+div[data-testid="stVerticalBlock"]{
+	gap: 0em !important;
+}
+
 </style>
 <div id="iframe">
-<iframe src="https://share.streamlit.io/clynekp/safegraph-data-analysis/main">
+<iframe src="https://share.streamlit.io/clynekp/safegraph-data-analysis/main" id="mainframe">
 </iframe>
 </div>
 
+
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1outpf7.e1fqkh3o1 > div.block-container.css-128j0gw.egzxvld2 > div:nth-child(1) > div > div:nth-child(44)
+
+#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-1outpf7.e1fqkh3o1 > div.block-container.css-128j0gw.egzxvld2 > div:nth-child(1) > div > div > iframe

@@ -5,6 +5,18 @@ import time
 if "counter" not in st.session_state:
     st.session_state.counter = 1
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            button[data-testid] {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            div > div > iframe{display: none;}
+            div[data-testid="stVerticalBlock"]{gap: 0em !important;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 with st.sidebar:
     st.header("Set Focus Here on Page Reload")
     st.write("Please click button at bottom of page.")
