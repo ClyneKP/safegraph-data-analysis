@@ -51,14 +51,16 @@ headers = {'apikey': st.secrets["SG_KEY"]}
 
 endpoint = HTTPEndpoint(url, headers)
 
+jfk = [40.6650, -73.7821]
+
 def map(data, lat, lon, zoom):
     layers = pdk.Layer("GeoJsonLayer", data=data, get_fill_color=[0, 0, 0],)
 
     st.write(pdk.Deck(layers, map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state={
-            "latitude": lat,
-            "longitude": lon,
-            "zoom": zoom,
+            "latitude": jfk[0],
+            "longitude": jfk[1],
+            "zoom": 11,
             "pitch": 50,
         }
     ))
