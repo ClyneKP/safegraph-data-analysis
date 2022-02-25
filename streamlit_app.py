@@ -25,7 +25,8 @@ end_dt = datetime.datetime.today() - relativedelta(months=1)
 #Make list of dates
 dates = [dt for dt in rrule(MONTHLY, dtstart=strt_dt, until=end_dt)]
 
-
+path = gpd.datasets.get_path('nybb')
+df = gpd.read_file(path)
 
 st.set_page_config(page_title="HR&A SafeGraph Analysis Template", page_icon="📈", layout="centered")
 
@@ -256,13 +257,27 @@ with form:
                         file_name= studyname + '.csv',
                         mime='text/csv',)
 
+def add_data():
+    for _, r in df.iterrows():
+    # Without simplifying the representation of each borough,
+    # the map might not be displayed
+    sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
+    geo_j = sim_geo.to_json()
+    geo_j = folium.GeoJson(data=geo_j,
+                           style_function=lambda x: {'fillColor': 'orange'})
+    folium.Popup(r['BoroName']).add_to(geo_j)
+    geo_j.add_to(m)
+    with empty:
+        output = st_folium(m, width=500, height=500)
     
 
-expander2 = st.expander("Draw a Study Area")
-with expander2:
-    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
+empty = st.empty()
+with empty:
+    m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
     Draw(export=False).add_to(m)
     output = st_folium(m, width=500, height=500)
+
+st.button("Add Data", on_click=None)
 
 download = st.container()
 
