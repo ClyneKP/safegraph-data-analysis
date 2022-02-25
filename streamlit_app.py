@@ -25,7 +25,6 @@ adjust_console = """
             </script>
             """
 
-section[data-testid]
 
 url = 'https://api.safegraph.com/v2/graphql'
 headers = {'apikey': st.secrets["SG_KEY"]}
