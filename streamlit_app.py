@@ -257,24 +257,18 @@ with form:
                         file_name= studyname + '.csv',
                         mime='text/csv',)
 
-m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+
 
 def add_data():
-    for _, r in df.iterrows():
-        # Without simplifying the representation of each borough,
-        # the map might not be displayed
-        sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
-        geo_j = sim_geo.to_json()
-        geo_j = folium.GeoJson(data=geo_j,
-                               style_function=lambda x: {'fillColor': 'orange'})
-        folium.Popup(r['BoroName']).add_to(geo_j)
-        geo_j.add_to(m)
+    d = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+    folium.GeoJson(data=df['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
     with empty:
-        st_folium(m, width=500, height=500)
+        st_folium(d, width=500, height=500)
     
 
 empty = st.empty()
 with empty:
+    m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
     Draw(export=False).add_to(m)
     st_folium(m, width=500, height=500)
 
