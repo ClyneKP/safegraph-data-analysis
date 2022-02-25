@@ -13,6 +13,7 @@ st.set_page_config(page_title="streamlit-folium documentation")
 
 with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+    submitted = st.form_submit_button(label="Submit")
 
 
 m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
