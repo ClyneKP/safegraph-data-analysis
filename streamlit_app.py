@@ -6,6 +6,20 @@ import pandas as pd
 import time
 import shapestats_kc as shp
 from sgqlc.endpoint.http import HTTPEndpoint
+from datetime import datetime
+from dateutil.rrule import rrule, MONTHLY
+from dateutil.relativedelta import relativedelta
+
+
+#Create a list of the months of data that SafeGraph has.
+#SafeGraph's dataset goes back to Jan 2018
+strt_dt = datetime.date(2018,1,1)
+#Going up until the last month, or today minus one month
+end_dt = datetime.datetime.today() - relativedelta(months=1)
+#Make list of dates
+dates = [dt for dt in rrule(MONTHLY, dtstart=strt_dt, until=end_dt)]
+
+
 
 st.set_page_config(page_title="HR&A SafeGraph Analysis Template", page_icon="📈", layout="centered")
 
@@ -105,7 +119,82 @@ def query_radius(i,lat,lng,distance):
             scroll()
     return(dfs)
 
+def month_analysis(data,start_date,end_date):
 
+    time_range = dates[start_date:end_date+1]
+
+    for month in time_range:
+        start_string = month.strftime("%Y-%m-%d")
+        end_string = (month + relativedelta(months=1)).strftime("%Y-%m-%d")
+
+        #Get the data from the SafeGraph API
+        place_file = get_monthly_data(list(data['placekey']),start_string,end_string)
+        st.sidebar.write(f"""Completed: {start_string}""")
+
+def get_monthly_data(placekeys,start_date,end_date):
+
+    time_range = dates[start_date:end_date+1]
+
+    for month in time_range:
+
+    st.sidebar.write(f"""Getting Data for {i}""")
+    #The max number of records SG will return is 20 places so we will have to loop through them
+    records_per_call = 20
+    got_so_far = 0
+    got_this_batch = records_per_call
+    #Make an empty DataFrame to hold all of the places
+    poi_dfs = []
+
+    while got_this_batch == records_per_call:
+        variables = {
+          "placekeys": placekeys[got_so_far:(got_so_far+records_per_call)],
+            "start_date": start_date,
+            "end_date": end_date
+        }
+
+        query = f"""
+        query MyQuery2($placekeys: [Placekey!], $start_date: String!, $end_date: String!) {{
+          batch_lookup(placekeys: $placekeys) {{
+            safegraph_monthly_patterns(by_range: {{start_date: $start_date, end_date: $end_date}}) {{
+              placekey
+              poi_cbg
+              popularity_by_hour
+              date_range_end
+              date_range_start
+              raw_visit_counts
+              raw_visitor_counts
+              visits_by_day
+              visitor_home_cbgs
+              visitor_daytime_cbgs
+            }}
+            safegraph_core {{
+              latitude
+              longitude
+              location_name
+              naics_code
+              street_address
+              postal_code
+              sub_category
+              top_category
+              city
+            }}
+          }}
+        }}
+                    """
+
+        res = endpoint(query,variables)
+        key0 = list(res)[0]
+        key1 = list(res[key0])[0]
+        #pd.DataFrame.from_records(res[key0][key1][0]['safegraph_monthly_patterns'])
+        r = res[key0][key1]
+        for place in r:
+            df = pd.DataFrame.from_records(place)
+            df = df.rename(columns={'safegraph_core': 'safegraph_monthly_patterns'}).stack().unstack().transpose()
+            poi_dfs.append(df)
+        got_this_batch = len(r)
+        got_so_far += got_this_batch
+    poi_dfs = pd.concat(poi_dfs,ignore_index=True)
+    return poi_dfs
 
 st.title("HR&A SafeGraph Analysis Tool")
 
@@ -118,6 +207,13 @@ with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+    options = st.select_slider(
+     'Select a timeframe',
+     options=[dt.strftime("%B %Y") for dt in dates],
+     value=([dt.strftime("%B %Y") for dt in dates][len(dates)-25], [dt.strftime("%B %Y") for dt in dates][len(dates)-1]))
+
+    start_month = dates.index(datetime.datetime.strptime(options[0],"%B %Y"))
+    end_month = dates.index(datetime.datetime.strptime(options[1],"%B %Y"))
 
     expander = st.expander("See all records")
     with expander:
@@ -136,6 +232,7 @@ with form:
         radius, center = shp.minimum_bounding_circle(b)
         p = gpd.GeoSeries([Point(center[0], center[1])], crs="EPSG:26914").to_crs(epsg=4326)
         data = query_radius(1,p[0].y,p[0].x,round(radius))
+        place_files = get_monthly_data(list(data['placekeys']),start_month,end_month)
         csv = convert_df(data)
 
         with download:
