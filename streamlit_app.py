@@ -216,10 +216,12 @@ with form:
     st.markdown("***")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-
-
+        with container:
+            st.write("Hey there!")
 
     
+    st.markdown("***")
+    container = st.container()
     st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
@@ -280,7 +282,7 @@ if submitted and uploaded_file is None:
         st.error('Please upload your shapefile')
 
 
-if uploaded_file is not None:
+
     map_df = dataframe.to_crs(epsg=4326)
     radius, center = shp.minimum_bounding_circle(map_df)
 
