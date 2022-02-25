@@ -13,7 +13,7 @@ hide_streamlit_style = """
             button[data-testid="manage-app-button"]{
             visibility:hidden
             };
-            header {visibility: hidden}
+            header {visibility: hidden};
             footer {visibility: hidden;}
             </style>
             """
