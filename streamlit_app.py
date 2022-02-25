@@ -216,6 +216,21 @@ Draw(export=False).add_to(m)
 studyname = st.text_input("Project Name",value="")
 st.markdown("***")
 uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+def checks():
+    if uploaded_file is not None:
+        if studyname == "":
+            st.error('Please name your project')
+        else:
+            dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+            datamap = dataframe.to_crs(epsg=4326)
+            geometry = datamap['geometry']
+            bbox = datamap.total_bounds
+            m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
+            folium.GeoJson(data=geometry).add_to(m)
+            with st.spinner('Processing...'):
+                printer(studyname, dataframe)
+    else:
+        st.error('Please upload your shapefile')
 folium_static(m)
 st.markdown("***")
 options = st.select_slider(
@@ -233,21 +248,6 @@ with expander:
 
 st.markdown("***")
 
-def checks():
-    if uploaded_file is not None:
-        if studyname == "":
-            st.error('Please name your project')
-        else:
-            dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-            datamap = dataframe.to_crs(epsg=4326)
-            geometry = datamap['geometry']
-            bbox = datamap.total_bounds
-            m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
-            folium.GeoJson(data=geometry).add_to(m)
-            with st.spinner('Processing...'):
-                printer(studyname, dataframe)
-    else:
-        st.error('Please upload your shapefile')
 
 
 submitted = st.button(label="Submit",on_click=checks())
