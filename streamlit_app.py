@@ -25,7 +25,6 @@ with st.echo():
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=4326)
         geometry = dataframe['geometry']
         bbox = dataframe.total_bounds
-        st.write(coords)
         m = folium.Map(location=[40.70, -73.94], tiles='CartoDB positron')
         m.fit_bounds([[bbox[0],bbox[3]],[bbox[2],bbox[1]]])
         folium.GeoJson(data=geometry).add_to(m)
