@@ -2,7 +2,6 @@ import streamlit as st
 import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
-from streamlit_folium import folium_static
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 import geopandas as gpd
@@ -40,8 +39,7 @@ hide_streamlit_style = """
             #MainMenu {visibility: hidden;}
             
             header {visibility: hidden;}
-            footer {visibility: hidden;}
-            button[data-testid] {visibility: hidden;}
+            
             
             div[data-testid="stVerticalBlock"]{gap: 0em !important;}
             </style>
@@ -210,27 +208,17 @@ st.title("HR&A SafeGraph Analysis Tool")
 
 
 form = st.form(key="inputs")
-m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-Draw(export=False).add_to(m)
+
 
 with form:
-    st.subheader('Give Your Project a Name')
-    studyname = st.text_input("Project Name:",value="")
+    studyname = st.text_input("Project Name",value="")
     st.markdown("***")
-    st.subheader('Draw or Upload Your Study Area(s)')
-    uploaded_file = st.file_uploader("Upload:")
-    if uploaded_file is not None:
-        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        mapdata = dataframe.to_crs(epsg=4326)
-        geometry = mapdata['geometry']
-        bbox = dataframe.total_bounds
-        m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
-        folium.GeoJson(data=geometry).add_to(m)
-    folium_static(m)
+    uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+
+    placeholder = st.empty()
     st.markdown("***")
-    st.subheader('Select a Timeframe')
     options = st.select_slider(
-     'Timeframe:',
+     'Select a timeframe',
      options=[dt.strftime("%B %Y") for dt in dates],
      value=([dt.strftime("%B %Y") for dt in dates][len(dates)-25], [dt.strftime("%B %Y") for dt in dates][len(dates)-1]))
 
@@ -240,7 +228,7 @@ with form:
     st.markdown("***")
     expander = st.expander("Advanced Settings")
     with expander:
-        st.write(f"[Will add options to select/edit NAICS categories here]")
+        st.write(f"Open original NAICS def google sheet")
 
     st.markdown("***")
 
@@ -270,15 +258,20 @@ with form:
 
     
 
+expander2 = st.expander("Draw a Study Area")
+with expander2:
+    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
+    Draw(export=False).add_to(m)
+    output = st_folium(m, width=500, height=500)
 
 download = st.container()
 
-if submitted and uploaded_file is not None:
-    if studyname == "":
-        st.error('Please name your project')
-    else:
-        with st.spinner('Processing...'):
-            printer(studyname, dataframe)
+if uploaded_file is not None:
+    dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+    data_map = dataframe.to_crs(epsg=4326)
+    folium.GeoJson(data=data_map['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
+
+
 
 
 
@@ -289,8 +282,22 @@ if submitted and uploaded_file is None:
     else:
         st.error('Please upload your shapefile')
 
+m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+Draw(export=False).add_to(m)
 
+if uploaded_file is not None:
+    dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+    geometry = dataframe.to_crs(epsg=4326)['geometry']
+    bbox = dataframe.total_bounds
+    m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
+    folium.GeoJson(data=geometry).add_to(m)
 
-
-
-
+if submitted and uploaded_file is not None:
+    if studyname == "":
+        st.error('Please name your project')
+    else:
+        with st.spinner('Processing...'):
+            printer(studyname, dataframe)
+            
+# call to render Folium map in Streamlit
+folium_static(m)
