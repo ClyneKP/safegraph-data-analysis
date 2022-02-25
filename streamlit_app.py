@@ -273,18 +273,7 @@ if uploaded_file is not None:
     bbox = datamap.total_bounds
     m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
     folium.GeoJson(data=geometry).add_to(m)
-    if studyname == "":
-        st.error('Please name your project')
 
-if submitted:
-    if uploaded_file is None:
-        if studyname == "":
-            st.error('Please upload your shapefile and name your project')
-        else:
-            st.error('Please upload your shapefile')
-    else:
-        with st.spinner('Processing...'):
-            printer(studyname, dataframe)
 
 # call to render Folium map in Streamlit
 folium_static(m)
