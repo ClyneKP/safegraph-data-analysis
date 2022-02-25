@@ -100,6 +100,7 @@ def query_radius(i,lat,lng,distance):
         st.sidebar.write(f"""Completed querying all places in Polygon #{i}""")
 
         for t in range(1,30):
+            st.sidebar.write('Next')
             time.sleep(1)
             scroll()
     return(dfs)
