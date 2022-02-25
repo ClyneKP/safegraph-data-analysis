@@ -10,7 +10,7 @@ from streamlit_folium import folium_static
 
 st.set_page_config(page_title="streamlit-folium documentation")
 
-
+form = st.form(key="inputs")
 with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     submitted = st.form_submit_button(label="Submit")
