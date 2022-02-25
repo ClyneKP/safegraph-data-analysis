@@ -19,6 +19,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 adjust_console = """
             <script>
+            console.log("Hi!")
             $(".css-1outpf7").scrollTo({top: $(".css-1outpf7").scrollHeight, behavior: 'smooth'});
             </script>
             """
