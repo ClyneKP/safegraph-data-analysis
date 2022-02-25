@@ -12,11 +12,6 @@ with st.echo():
     import streamlit as st
     from streamlit_folium import folium_static
     import folium
-    import branca
-
-    page = st.radio(
-        "Select map type", ["Single map", "Dual map", "Branca figure"], index=0
-    )
 
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
 
