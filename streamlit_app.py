@@ -11,15 +11,7 @@ st.set_page_config(page_title="HR&A SafeGraph Analysis Template", page_icon="ðŸ“
 if "counter" not in st.session_state:
     st.session_state.counter = 1
 
-scroll = components.html(
-            f"""
-                <p>{st.session_state.counter}</p>
-                <script>
-                    window.parent.document.querySelector('.css-1outpf7').scrollTo({{top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'}});
-                </script>
-            """,
-            height=0
-        )
+
 
 hide_streamlit_style = """
             <style>
@@ -95,7 +87,15 @@ def query_radius(i,lat,lng,distance):
         for t in range(1,20):
             st.session_state.counter += 1
             st.sidebar.write(f"""Next""")
-            scroll
+            components.html(
+            f"""
+                <p>{st.session_state.counter}</p>
+                <script>
+                    window.parent.document.querySelector('.css-1outpf7').scrollTo({{top: window.parent.document.querySelector('.css-1outpf7').scrollHeight, behavior: 'smooth'}});
+                </script>
+            """,
+            height=0
+            )
     return(dfs)
 
 
