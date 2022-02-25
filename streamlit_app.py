@@ -18,26 +18,16 @@ with st.echo():
         "Select map type", ["Single map", "Dual map", "Branca figure"], index=0
     )
 
-    # center on Liberty Bell, add marker
-    if page == "Single map":
+    uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+
+    if uploaded_file is None:
+        dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
+        m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+        folium.GeoJson(data=dataframe['geometry']).add_to(m)
+    else:
         m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
         folium.GeoJson(data=data['geometry']).add_to(m)
 
-    elif page == "Dual map":
-        m = folium.plugins.DualMap(location=[39.949610, -75.150282], zoom_start=16)
-        tooltip = "Liberty Bell"
-        folium.Marker(
-            [39.949610, -75.150282], popup="Liberty Bell", tooltip=tooltip
-        ).add_to(m)
-
-    elif page == "Branca figure":
-        m = branca.element.Figure()
-        fm = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
-        tooltip = "Liberty Bell"
-        folium.Marker(
-            [39.949610, -75.150282], popup="Liberty Bell", tooltip=tooltip
-        ).add_to(fm)
-        m.add_child(fm)
 
     # call to render Folium map in Streamlit
     folium_static(m)
