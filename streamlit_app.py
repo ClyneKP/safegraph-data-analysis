@@ -24,8 +24,9 @@ import folium
 uploaded_file = st.file_uploader("Upload Study Area Shapefile")
 
 
-m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-Draw(export=False).add_to(m)
+#m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
+m = geemap.Map(center=[40.70, -73.94], zoom=4)
+#Draw(export=False).add_to(m)
 
 if uploaded_file is not None:
     dataframe = gpd.read_file(uploaded_file).to_crs(epsg=4326)
