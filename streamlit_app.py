@@ -16,7 +16,8 @@ with st.echo():
     import geemap.eefolium as geemap
     import ee
 
-    m = geemap.Map()
+    m = geemap.Map(center=[40.70, -73.94], zoom=4)
+    dc = Map.draw_control
     dem = ee.Image('USGS/SRTMGL1_003')
 
     vis_params = {
