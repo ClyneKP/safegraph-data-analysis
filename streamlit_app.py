@@ -40,7 +40,8 @@ hide_streamlit_style = """
             #MainMenu {visibility: hidden;}
             
             header {visibility: hidden;}
-            
+            footer {visibility: hidden;}
+            button[data-testid] {visibility: hidden;}
             
             div[data-testid="stVerticalBlock"]{gap: 0em !important;}
             </style>
