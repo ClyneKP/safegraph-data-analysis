@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_folium import folium_static
 import folium
 from folium.plugins import Draw
 from streamlit_folium import st_folium
@@ -298,6 +299,6 @@ if submitted and uploaded_file is not None:
     else:
         with st.spinner('Processing...'):
             printer(studyname, dataframe)
-            
+
 # call to render Folium map in Streamlit
 folium_static(m)
