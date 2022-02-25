@@ -215,8 +215,7 @@ with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        with placeholder:
-            st.write("This is one element")
+        
     st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
@@ -267,6 +266,8 @@ if submitted and uploaded_file is not None:
     else:
         with st.spinner('Processing...'):
             printer(studyname, dataframe)
+        with placeholder:
+            st.write("This is one element")
 
 
 if submitted and uploaded_file is None:
