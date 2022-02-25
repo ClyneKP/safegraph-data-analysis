@@ -19,8 +19,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 adjust_console = """
             <script>
-            var objDiv = document.querySelector(".block-container");
-            objDiv.scrollTop = objDiv.scrollHeight;
+            $('.block-container').scrollTop($('.block-container')[0].scrollHeight);
             </script>
             """
 
@@ -87,8 +86,6 @@ def query_radius(i,lat,lng,distance):
             st.markdown(adjust_console, unsafe_allow_html=True) 
             st.sidebar.write(f"""Next""")
     return(dfs)
-
-
 
 
 
