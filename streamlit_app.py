@@ -218,13 +218,13 @@ with form:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
         data_map = dataframe.to_crs(epsg=4326)
         for _, r in data_map.iterrows():
-        # Without simplifying the representation of each borough,
-        # the map might not be displayed
-        sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
-        geo_j = sim_geo.to_json()
-        geo_j = folium.GeoJson(data=geo_j,
-                               style_function=lambda x: {'fillColor': 'orange'})
-        geo_j.add_to(m)
+            # Without simplifying the representation of each borough,
+            # the map might not be displayed
+            sim_geo = gpd.GeoSeries(r['geometry']).simplify(tolerance=0.001)
+            geo_j = sim_geo.to_json()
+            geo_j = folium.GeoJson(data=geo_j,
+                                   style_function=lambda x: {'fillColor': 'orange'})
+            geo_j.add_to(m)
 
     placeholder = st.empty()
     st.markdown("***")
