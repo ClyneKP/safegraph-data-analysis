@@ -1,0 +1,26 @@
+<style>
+#iframe {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    position:  relative;
+}
+iframe {
+    border: none;
+    width: 100%;
+    height: calc(100% + 500px);
+    position: absolute;
+}
+</style>
+<div id="iframe">
+<iframe src="https://share.streamlit.io/clynekp/safegraph-data-analysis/main">
+</iframe>
+</div>
+<script>
+	window.onload = function(e){
+	document.querySelector("#root > div:nth-child(1) > div > div > a").remove()
+	}
+
+</script>
+

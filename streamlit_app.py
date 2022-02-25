@@ -72,7 +72,7 @@ def query_radius(i,lat,lng,distance):
         time.sleep(2)
         cursor = res['data']['search']['places']['results']['pageInfo']['endCursor']
         nextPage = res['data']['search']['places']['results']['pageInfo']['hasNextPage']
-        st.sidebar.write("&nbsp;&nbsp;Found places:", len(dfs))
+        st.sidebar.write("&nbsp;&nbsp;&nbsp;&nbsp;Found places:", len(dfs))
     else:
         st.sidebar.write(f"""Completed querying all places in polygon #{i}""")
     return(dfs)
@@ -115,7 +115,8 @@ with form:
         csv = convert_df(data)
 
         with download:
-            st.success('Complete!')
+            st.sidebar.write(f"""Completed""")
+            st.success('Success!')
             st.download_button(label="Download files",
                         data=csv,
                         file_name= studyname + '.csv',
@@ -129,7 +130,7 @@ if submitted and uploaded_file is not None:
     if studyname == "":
         st.error('Please name your project')
     else:
-        with st.spinner('Wait for it...'):
+        with st.spinner('Processing...'):
             printer(studyname, dataframe)
 
 
