@@ -10,8 +10,8 @@ from sgqlc.endpoint.http import HTTPEndpoint
 import datetime
 from dateutil.rrule import rrule, MONTHLY
 from dateutil.relativedelta import relativedelta
-import matplotlib.pyplot as plt
 import numpy as np
+import pydeck as pdk
 
 
 #Create a list of the months of data that SafeGraph has.
@@ -50,6 +50,33 @@ url = 'https://api.safegraph.com/v2/graphql'
 headers = {'apikey': st.secrets["SG_KEY"]}
 
 endpoint = HTTPEndpoint(url, headers)
+
+def map(data, lat, lon, zoom):
+    st.write(pdk.Deck(
+        map_style="mapbox://styles/mapbox/light-v9",
+        initial_view_state={
+            "latitude": lat,
+            "longitude": lon,
+            "zoom": zoom,
+            "pitch": 50,
+        },
+        layers=[
+            pdk.Layer(
+            "PolygonLayer",
+            data,
+            id="geojson",
+            opacity=0.8,
+            stroked=False,
+            get_polygon="geometry",
+            filled=True,
+            wireframe=True,
+            get_line_color=[255, 255, 255],
+            auto_highlight=True,
+            pickable=True,
+        ),
+        ]
+    ))
+
 
 def scroll():
     st.session_state.counter += 1
@@ -210,11 +237,10 @@ with form:
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-        df_wm = df.to_crs(epsg=3857)
-        ax = df_wm.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
-        cx.add_basemap(ax, source=cx.providers.Stamen.TonerLite)
-        ax.set_axis_off()
-        st.pyplot(ax)
+        geodf = dataframe.to_crs(epsg=4326)
+        rad, coords = shp.minimum_bounding_circle(dataframe)
+        map(geodf,rad[0],rad[1] midpoint[1], 11)
+
     
     st.markdown("***")
     options = st.select_slider(
