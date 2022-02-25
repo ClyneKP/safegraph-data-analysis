@@ -10,6 +10,8 @@ from sgqlc.endpoint.http import HTTPEndpoint
 import datetime
 from dateutil.rrule import rrule, MONTHLY
 from dateutil.relativedelta import relativedelta
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 #Create a list of the months of data that SafeGraph has.
