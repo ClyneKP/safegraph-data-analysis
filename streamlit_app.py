@@ -213,6 +213,7 @@ with form:
     studyname = st.text_input("Project Name",value="")
     st.markdown("***")
     uploaded_file = st.file_uploader("Upload Study Area Shapefile")
+    container = st.container()
     st.markdown("***")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
@@ -221,7 +222,6 @@ with form:
 
     
     st.markdown("***")
-    container = st.container()
     st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
