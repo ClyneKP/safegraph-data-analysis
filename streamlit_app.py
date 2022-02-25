@@ -17,7 +17,7 @@ components.html(
     f"""
         <p>{st.session_state.counter}</p>
         <script>
-            window.parent.document.querySelector('section[st-sidebar]').scrollTo(0, 0);
+            window.parent.document.querySelectorAll('section').scrollTo(0, 0);
         </script>
     """,
     height=0
