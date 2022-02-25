@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from folium.plugins import Draw
 from streamlit_folium import st_folium
 from streamlit_folium import folium_static
+import folium
 
 
 st.set_page_config(page_title="streamlit-folium documentation")
