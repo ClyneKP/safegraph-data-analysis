@@ -1,0 +1,9 @@
+pandas
+google_api_python_client
+protobuf
+streamlit==1.4.0
+geopandas
+scipy
+libpysal
+shapely
+sgqlc
