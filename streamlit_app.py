@@ -263,8 +263,7 @@ download = st.container()
 
 if uploaded_file is not None:
     dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-    data_map = dataframe.to_crs(epsg=4326)
-    folium.GeoJson(data=data_map['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
+
 
 if submitted and uploaded_file is not None:
     if studyname == "":
