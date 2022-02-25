@@ -233,8 +233,6 @@ with expander:
 
 st.markdown("***")
 
-submitted = st.button(label="Submit",on_click=checks())
-
 def checks():
     if uploaded_file is not None:
         if studyname == "":
@@ -250,6 +248,10 @@ def checks():
                 printer(studyname, dataframe)
     else:
         st.error('Please upload your shapefile')
+
+
+submitted = st.button(label="Submit",on_click=checks())
+
 
 def convert_df(df):
  # IMPORTANT: Cache the conversion to prevent computation on every rerun
