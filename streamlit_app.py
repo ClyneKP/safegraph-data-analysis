@@ -17,7 +17,7 @@ with st.echo():
     import ee
 
     m = geemap.Map(center=[40.70, -73.94], zoom=4)
-    dc = Map.draw_control
+    dc = m.draw_control
     dem = ee.Image('USGS/SRTMGL1_003')
 
     vis_params = {
