@@ -10,10 +10,8 @@ st.set_page_config(page_title="HR&A SafeGraph Analysis Template", page_icon="ğŸ“
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
-            button[data-testid="manage-app-button"]{
-            visibility:hidden
-            };
-            header {visibility: hidden};
+            button[data-testid="manage-app-button"]{visibility:hidden;}
+            header {visibility: hidden;}
             footer {visibility: hidden;}
             </style>
             """
