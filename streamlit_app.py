@@ -133,11 +133,7 @@ def month_analysis(data,start_date,end_date):
 
 def get_monthly_data(placekeys,start_date,end_date):
 
-    time_range = dates[start_date:end_date+1]
-
-    for month in time_range:
-
-    st.sidebar.write(f"""Getting Data for {i}""")
+    st.sidebar.write(f"""Getting Data: {start_date}""")
     #The max number of records SG will return is 20 places so we will have to loop through them
     records_per_call = 20
     got_so_far = 0
