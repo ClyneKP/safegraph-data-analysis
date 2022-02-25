@@ -259,22 +259,9 @@ with form:
 
     
 
-expander2 = st.expander("Draw a Study Area")
-with expander2:
-    m = folium.Map(location=[40.6650, -73.7821], zoom_start=11, tiles='CartoDB positron')
-    Draw(export=False).add_to(m)
-    output = st_folium(m, width=500, height=500)
+
 
 download = st.container()
-
-if uploaded_file is not None:
-    dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
-    data_map = dataframe.to_crs(epsg=4326)
-    folium.GeoJson(data=data_map['geometry'],style_function=lambda x: {'fillColor': 'orange'}).add_to(m)
-
-
-
-
 
 if submitted and uploaded_file is None:
 
