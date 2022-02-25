@@ -219,9 +219,6 @@ with form:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=26914)
         with container:
             st.write("Hey there!")
-
-    
-    st.markdown("***")
     st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
