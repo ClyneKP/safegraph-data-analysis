@@ -215,15 +215,8 @@ Draw(export=False).add_to(m)
 with form:
     studyname = st.text_input("Project Name",value="")
     st.markdown("***")
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        folium_static(m,width=50,height=50)
-
-    
-    with col2:
-        uploaded_file = st.file_uploader("Upload Study Area Shapefile")
-
-    placeholder = st.empty()
+    folium_static(m)
+    uploaded_file = st.file_uploader("Upload Study Area Shapefile")
     st.markdown("***")
     options = st.select_slider(
      'Select a timeframe',
