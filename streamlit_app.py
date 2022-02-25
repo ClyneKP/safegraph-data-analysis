@@ -60,21 +60,7 @@ def map(data, lat, lon, zoom):
             "zoom": zoom,
             "pitch": 50,
         },
-        layers=[
-            pdk.Layer(
-            "PolygonLayer",
-            data,
-            id="geojson",
-            opacity=0.8,
-            stroked=False,
-            get_polygon="geometry",
-            filled=True,
-            wireframe=True,
-            get_line_color=[255, 255, 255],
-            auto_highlight=True,
-            pickable=True,
-        ),
-        ]
+        layers= pdk.Layer("GeoJsonLayer", data=data, get_fill_color=[0, 0, 0],)
     )))
 
 
