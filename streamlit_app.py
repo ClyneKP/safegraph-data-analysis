@@ -218,7 +218,6 @@ with form:
     studyname = st.text_input("Project Name:",value="")
     st.markdown("***")
     st.subheader('Draw or Upload Your Study Area(s)')
-    folium_static(m)
     uploaded_file = st.file_uploader("Upload:")
     if uploaded_file is not None:
         dataframe = gpd.read_file(uploaded_file).to_crs(epsg=4326)
@@ -226,6 +225,7 @@ with form:
         bbox = dataframe.total_bounds
         m.fit_bounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]], padding=[20,20])
         folium.GeoJson(data=geometry).add_to(m)
+    folium_static(m)
     st.markdown("***")
     st.subheader('Select a Timeframe')
     options = st.select_slider(
