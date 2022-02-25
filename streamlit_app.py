@@ -6,7 +6,7 @@ import pandas as pd
 import time
 import shapestats_kc as shp
 from sgqlc.endpoint.http import HTTPEndpoint
-from datetime import datetime
+import datetime
 from dateutil.rrule import rrule, MONTHLY
 from dateutil.relativedelta import relativedelta
 
@@ -31,7 +31,7 @@ if "counter" not in st.session_state:
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
-            button[data-testid] {visibility: hidden;}
+            
             header {visibility: hidden;}
             
             div > div > iframe{display: none;}
@@ -39,6 +39,7 @@ hide_streamlit_style = """
             </style>
             """
             #footer {visibility: hidden;}
+            #button[data-testid] {visibility: hidden;}
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 
