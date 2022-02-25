@@ -121,13 +121,18 @@ def month_analysis(data,start_date,end_date):
 
     time_range = dates[start_date:end_date+1]
 
+    place_files = []
     for month in time_range:
         start_string = month.strftime("%Y-%m-%d")
         end_string = (month + relativedelta(months=1)).strftime("%Y-%m-%d")
 
         #Get the data from the SafeGraph API
         place_file = get_monthly_data(list(data['placekey']),start_string,end_string)
-        st.sidebar.write(f"""Completed: {start_string}""")
+        place_files.append(place_file)
+
+    return pd.concat(place_files)
+
+
 
 def get_monthly_data(placekeys,start_date,end_date):
 
@@ -227,7 +232,7 @@ with form:
         p = gpd.GeoSeries([Point(center[0], center[1])], crs="EPSG:26914").to_crs(epsg=4326)
         data = query_radius(1,p[0].y,p[0].x,round(radius))
         place_files = month_analysis(data,start_month,end_month)
-        csv = convert_df(data)
+        csv = convert_df(place_files)
 
         with download:
             st.sidebar.write(f"""Completed""")
