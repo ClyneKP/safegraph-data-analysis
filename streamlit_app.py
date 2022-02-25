@@ -84,7 +84,8 @@ def query_radius(i,lat,lng,distance):
         st.sidebar.write("&nbsp;&nbsp;&nbsp;&nbsp;Found places:", len(dfs))
     else:
         st.sidebar.write(f"""Completed querying all places in Polygon #{i}""")
-        for t in range(1,20):
+        for t in range(1,30):
+            time.sleep(1)
             st.session_state.counter += 1
             st.sidebar.write(f"""Next""")
             components.html(
